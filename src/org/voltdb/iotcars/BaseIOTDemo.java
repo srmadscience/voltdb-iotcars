@@ -49,7 +49,7 @@ import iotcarsprocs.ReferenceData;
 public abstract class BaseIOTDemo {
 
     protected static final int START_AREA_ID = 94000;
-    public static final String GENERIC_QUERY_LICENCE_PLATE = "CAR431130";
+    public static final String GENERIC_QUERY_LICENCE_PLATE = "CAR430";
     public static final long DEFAULT_WANTED_MINUTES = 10;
     public static final long DEFAULT_WANTED_KWH = 75;
     private static final long RANDOM_SEED = 42;
