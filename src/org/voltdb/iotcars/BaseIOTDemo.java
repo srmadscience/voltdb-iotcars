@@ -323,7 +323,7 @@ public abstract class BaseIOTDemo {
 
                     int maxMinutesBeforeArrival = parameters.getOrDefault(MAX_MINUTES_BEFORE_ARRIVAL, 1l).intValue();
                     maxMinutesBeforeArrival = r.nextInt(maxMinutesBeforeArrival) + 1;
-                    final Date targetTime = new Date(System.currentTimeMillis() + (maxMinutesBeforeArrival * 1000));
+                    final Date targetTime = new Date(System.currentTimeMillis() + (maxMinutesBeforeArrival * 60 * 1000));
                     stateWaitingCount++;
 
                     FindParkingCallback fbcp = new FindParkingCallback(users, randomuser, randomArea, r, otherClient);
@@ -336,7 +336,7 @@ public abstract class BaseIOTDemo {
 
                     Long minutesSpentCharging = parameters.getOrDefault(MINUTES_SPENT_CHARGING, 2l);
 
-                    Date endTime = new Date(System.currentTimeMillis() + (minutesSpentCharging * 1000));
+                    Date endTime = new Date(System.currentTimeMillis() + (minutesSpentCharging * 60 * 1000));
                     users.startCharging(randomuser, endTime);
 
                     long chargerid = users.getChargerId(randomuser);
