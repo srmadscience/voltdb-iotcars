@@ -17,12 +17,12 @@ public class VehicleState {
     int unableToFindParkingCounter = 0;
     int spaceStolenParkingCounter = 0;
 
-    public VehicleState(int count) {
+    public VehicleState(int count, Random r) {
         super();
         state = new Vehicle[count];
 
         for (int i = 0; i < state.length; i++) {
-            state[i] = new Vehicle();
+            state[i] = new Vehicle(r.nextInt(300000));
         }
 
     }
@@ -203,6 +203,10 @@ public class VehicleState {
         long areaId = -1;
         Date endActivityDate = new Date(0);
         Date chargeStartTime = null;
+
+        public Vehicle(int startActive) {
+            endActivityDate = new Date(System.currentTimeMillis() + startActive);
+        }
 
         /**
          * @return the state

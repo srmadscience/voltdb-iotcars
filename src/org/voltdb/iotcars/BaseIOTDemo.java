@@ -273,7 +273,7 @@ public abstract class BaseIOTDemo {
 
         HashMap<String, Long> parameters = getParameters(mainClient);
 
-        VehicleState users = new VehicleState(userCount);
+        VehicleState users = new VehicleState(userCount,r);
 
         final long startMsRun = System.currentTimeMillis();
         long currentMs = System.currentTimeMillis();
