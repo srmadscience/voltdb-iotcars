@@ -1,10 +1,20 @@
 package org.voltdb.iotcars;
 
+import java.util.Arrays;
+
 import org.voltdb.client.Client;
 
 public class SimpleIOTDemo extends BaseIOTDemo {
 
     public static void main(String[] args) {
+        
+        msg("Parameters:" + Arrays.toString(args));
+
+        if (args.length != 6) {
+            msg("Usage: hostnames");
+            System.exit(1);
+        }
+
         
         String hostnames = args[0];
         

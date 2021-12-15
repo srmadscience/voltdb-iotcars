@@ -11,30 +11,30 @@ INSERT INTO area_merchants (area_id, merchant_id, merchant_name,merchant_offers)
 INSERT INTO area_chargers
 (area_id,charger_id,merchant_id,charger_kwh,hold_rate_per_min,kwh_rate,overage_rate_per_min,current_state,current_state_explanation,charging_requester_id)
 values
-(94597,1,1,75,3,0.31,20,'FREE','Not in use',null);
+(94000,1,1,75,3,0.31,20,'FREE','Not in use',null);
 
 INSERT INTO area_chargers
 (area_id,charger_id,merchant_id,charger_kwh,hold_rate_per_min,kwh_rate,overage_rate_per_min,current_state,current_state_explanation,charging_requester_id)
 values
-(94597,2,2,75,3,3.31,20,'FREE','Not in use',null);
+(94000,2,2,75,3,3.31,20,'FREE','Not in use',null);
 
 INSERT INTO area_chargers
 (area_id,charger_id,merchant_id,charger_kwh,hold_rate_per_min,kwh_rate,overage_rate_per_min,current_state,current_state_explanation,charging_requester_id)
 values
-(94597,3,null,15,3,0.31,20,'FREE','Not in use',null);
+(94000,3,null,15,3,0.31,20,'FREE','Not in use',null);
 
 INSERT INTO area_chargers
 (area_id,charger_id,merchant_id,charger_kwh,hold_rate_per_min,kwh_rate,overage_rate_per_min,current_state,current_state_explanation,charging_requester_id)
 values
-(94597,4,null,15,3,0.31,20,'FREE','Not in use',null);
+(94000,4,null,15,3,0.31,20,'FREE','Not in use',null);
 
 INSERT INTO area_chargers
 (area_id,charger_id,merchant_id,charger_kwh,hold_rate_per_min,kwh_rate,overage_rate_per_min,current_state,current_state_explanation,charging_requester_id)
 values
-(94597,5,null,15,3,0.31,20,'FREE','Not in use',null);
+(94000,5,null,15,3,0.31,20,'FREE','Not in use',null);
 
-INSERT INTO merchant_chargers (area_id, charger_id, merchant_id) values (94597,1,1);
-INSERT INTO merchant_chargers (area_id, charger_id, merchant_id) values (94597,2,2);
+INSERT INTO merchant_chargers (area_id, charger_id, merchant_id) values (94000,1,1);
+INSERT INTO merchant_chargers (area_id, charger_id, merchant_id) values (94000,2,2);
 
 
 insert into area_charger_availability select area_id,charger_id,DATEADD(MINUTE,0,truncate(MINUTE,NOW)) from area_chargers;
