@@ -123,24 +123,27 @@ ORDER BY param_name;
 
 CREATE PROCEDURE ShowActivity__promBL AS
 BEGIN
-select 'charger_availability_in_1' statname,  'charger_availability_in_1'  stathelp, how_many statvalue 
+select 'charger_availability_in' statname,  'charger_availability_in'  stathelp, 1 mins, how_many statvalue 
 from charger_availability_fullness
 where timeslot = DATEADD(MINUTE,1,TRUNCATE(MINUTE,NOW));
-select 'charger_availability_in_5' statname,  'charger_availability_in_5'  stathelp, how_many statvalue 
+select 'charger_availability_in' statname,  'charger_availability_in'  stathelp, 5 mins, how_many statvalue 
 from charger_availability_fullness
 where timeslot = DATEADD(MINUTE,5,TRUNCATE(MINUTE,NOW));
-select 'charger_availability_in_10' statname,  'charger_availability_in_10'  stathelp, how_many statvalue 
+select 'charger_availability_in' statname,  'charger_availability_in'  stathelp, 10 mins, how_many statvalue 
 from charger_availability_fullness
 where timeslot = DATEADD(MINUTE,10,TRUNCATE(MINUTE,NOW));
-select 'charger_availability_in_15' statname,  'charger_availability_in_15'  stathelp, how_many statvalue 
+select 'charger_availability_in' statname,  'charger_availability_in'  stathelp, 15 mins, how_many statvalue 
 from charger_availability_fullness
 where timeslot = DATEADD(MINUTE,20,TRUNCATE(MINUTE,NOW));
-select 'charger_availability_in_20' statname,  'charger_availability_in_20'  stathelp, how_many statvalue 
+select 'charger_availability_in' statname,  'charger_availability_in'  stathelp, 20 mins, how_many statvalue 
 from charger_availability_fullness
 where timeslot = DATEADD(MINUTE,20,TRUNCATE(MINUTE,NOW));
-select 'charger_availability_in_25' statname,  'charger_availability_in_25'  stathelp, how_many statvalue 
+select 'charger_availability_in' statname,  'charger_availability_in'  stathelp, 20 mins,how_many statvalue 
 from charger_availability_fullness
 where timeslot = DATEADD(MINUTE,25,TRUNCATE(MINUTE,NOW));
+select 'charger_availability_in' statname,  'charger_availability_in'  stathelp, 30 mins,how_many statvalue 
+from charger_availability_fullness
+where timeslot = DATEADD(MINUTE,30,TRUNCATE(MINUTE,NOW));
 select 'parameter_name' statname,  'parameter_name'  stathelp, param_name, param_value statvalue from demo_parameters;
 select 'charger_state' statname,  'number of chargers in this state' stathelp  , current_state ,how_many statvalue from charger_state_view;
 select 'request_state' statname,  'status of requests'  stathelp,  current_state,how_many statvalue from request_state_view;
