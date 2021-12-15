@@ -10,7 +10,7 @@ public class SimpleIOTDemo extends BaseIOTDemo {
         
         msg("Parameters:" + Arrays.toString(args));
 
-        if (args.length != 6) {
+        if (args.length != 1) {
             msg("Usage: hostnames");
             System.exit(1);
         }
