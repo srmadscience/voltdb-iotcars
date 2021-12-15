@@ -480,13 +480,14 @@ public abstract class BaseIOTDemo {
         long requestId = users.getRequestId(randomuser);
 
 
-        if (overageTimeMinutes < 2) {
+        if (overageTimeMinutes > 2) {
             
             users.endChargingWithOverage(randomuser, overageTimeMinutes);
             mainClient.callProcedure(ncb, "stop_charge_session", areaId, users.getChargerId(randomuser), areaId,
                     users.getRequestId(randomuser));
 
         } else {
+            
             users.endCharging(randomuser);
             mainClient.callProcedure(ncb, "charge_kwh_fees", qty, amount, requestId, areaId, chargerid, qty, amount, areaId,
                     chargerid);
