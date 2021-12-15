@@ -70,7 +70,7 @@ public class FindParkingCallback implements ProcedureCallback {
 
           availableSpacesTable.resetRowPosition();
 
-          if (availableSpacesTable.getRowCount() > 0) {
+          if (availableSpacesTable.advanceRow()) {
               
               availableSpacesTable.advanceToRow(r.nextInt(availableSpacesTable.getRowCount()));
 
