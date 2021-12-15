@@ -291,7 +291,6 @@ public abstract class BaseIOTDemo {
         long stateBookingCount = 0;
         long stateLookingCount = 0;
         long lastGlobalQueryMs = System.currentTimeMillis();
-        long noParkingFound = 0;
 
         msg("starting...");
 
@@ -377,7 +376,7 @@ public abstract class BaseIOTDemo {
 
                 msg("Skipped because transaction was in flight = " + inFlightCount);
                 msg("Skipped because vehicle was waiting = " + isActiveCount);
-                msg("Unable to find parking = " + noParkingFound);
+                msg("Unable to find parking = " + users.getUnableToFindParkingCounter());
 
                 msg("Charging=" + stateChargingCount);
                 msg("Asking=" + stateAskingCount);
@@ -434,7 +433,7 @@ public abstract class BaseIOTDemo {
 
         msg("Skipped because transaction was in flight = " + inFlightCount);
         msg("Skipped because vehicle was waiting = " + isActiveCount);
-        msg("Unable to find parking = " + noParkingFound);
+        msg("Unable to find parking = " + users.getUnableToFindParkingCounter());
 
         msg("Charging=" + stateChargingCount);
         msg("Asking=" + stateAskingCount);

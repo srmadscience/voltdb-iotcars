@@ -13,6 +13,8 @@ public class VehicleState {
     public final static int STATUS_ELSEWHERE = 5;
 
     Vehicle[] state = null;
+    
+    int unableToFindParkingCounter = 0;
 
     public VehicleState(int count) {
         super();
@@ -88,6 +90,7 @@ public class VehicleState {
             this.state[id].setTxInFlight(false);
             this.state[id].setEndActivityDate(new Date());
             this.state[id].setChargeStartTime(null);
+            unableToFindParkingCounter++;
         }
 
     }
@@ -163,6 +166,16 @@ public class VehicleState {
 
         this.state[randomuser].setRequestId(requestId);
     }
+    
+
+    /**
+     * @return the unableToFindParkingCounter
+     */
+    public int getUnableToFindParkingCounter() {
+        return unableToFindParkingCounter;
+    }
+
+ 
 
     class Vehicle {
         int state = STATUS_ELSEWHERE;
@@ -303,6 +316,5 @@ public class VehicleState {
 
     }
 
- 
   
 }
