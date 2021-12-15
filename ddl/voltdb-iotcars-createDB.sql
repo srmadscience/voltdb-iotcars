@@ -82,7 +82,7 @@ CREATE INDEX requests_ix2 ON requests (vehicle_plate);
 CREATE VIEW active_user_count AS
 SELECT current_state, count(*)
 FROM requests
-WHERE current_state IN ()
+WHERE current_state IN ('CHARGING','STOPPED','WAITING')
 GROUP BY current_state;
 
 CREATE TABLE request_charges
