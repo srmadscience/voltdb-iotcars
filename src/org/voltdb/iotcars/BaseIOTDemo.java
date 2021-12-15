@@ -48,7 +48,7 @@ import iotcarsprocs.ReferenceData;
  */
 public abstract class BaseIOTDemo {
 
-    private static final int START_AREA_ID = 94000;
+    protected static final int START_AREA_ID = 94000;
     public static final String GENERIC_QUERY_LICENCE_PLATE = "CAR431130";
     public static final long DEFAULT_WANTED_MINUTES = 10;
     public static final long DEFAULT_WANTED_KWH = 75;
@@ -158,14 +158,18 @@ public abstract class BaseIOTDemo {
 
             }
 
+            NullCallback ncb = new NullCallback();
+            
             for (int i = 0; i < 60; i++) {
 
                 msg("Creating area_charger_availability for now + " + i + " minutes");
-                mainClient.callProcedure("@AdHoc",
+                mainClient.callProcedure(ncb,"@AdHoc",
                         "insert into area_charger_availability select area_id,charger_id,DATEADD(MINUTE," + i
                                 + ",truncate(MINUTE,NOW)) from area_chargers;");
 
             }
+            
+            mainClient.drain();
 
         } catch (IOException | ProcCallException e) {
             e.printStackTrace();
