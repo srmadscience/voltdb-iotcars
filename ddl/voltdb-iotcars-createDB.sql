@@ -13,12 +13,18 @@ CREATE TABLE areas
 (area_id bigint not null primary key
 ,area_name varchar(30) not null);
 
+PARTITION TABLE areas ON COLUMN area_id;
+
+
 CREATE TABLE area_merchants 
 (area_id bigint not null 
 ,merchant_id bigint not null
 ,merchant_name   varchar(40) not null
 ,merchant_offers varchar(40) 
 ,primary key (area_id, merchant_id));
+
+PARTITION TABLE area_merchants ON COLUMN area_id;
+
 
 CREATE TABLE area_chargers 
 (area_id bigint not null 
