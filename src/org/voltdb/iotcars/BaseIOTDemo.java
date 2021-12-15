@@ -308,7 +308,6 @@ public abstract class BaseIOTDemo {
             }
 
             int randomuser = r.nextInt(userCount);
-            int randomArea = r.nextInt(areaCount) + START_AREA_ID;
 
             if (users.isTxInFlight(randomuser)) {
                 inFlightCount++;
@@ -319,6 +318,8 @@ public abstract class BaseIOTDemo {
                 users.startTran(randomuser);
 
                 if (users.getState(randomuser) == VehicleState.STATUS_ELSEWHERE) {
+                    
+                    int randomArea = r.nextInt(areaCount) + START_AREA_ID;
 
                     int maxMinutesBeforeArrival = parameters.getOrDefault(MAX_MINUTES_BEFORE_ARRIVAL, 1l).intValue();
                     maxMinutesBeforeArrival = r.nextInt(maxMinutesBeforeArrival) + 1;
@@ -377,6 +378,7 @@ public abstract class BaseIOTDemo {
                 msg("Skipped because transaction was in flight = " + inFlightCount);
                 msg("Skipped because vehicle was waiting = " + isActiveCount);
                 msg("Unable to find parking = " + users.getUnableToFindParkingCounter());
+                msg("Space stolen when trying to book = " + users.getSpaceStolenParkingCounter());
 
                 msg("Charging=" + stateChargingCount);
                 msg("Asking=" + stateAskingCount);
@@ -434,6 +436,7 @@ public abstract class BaseIOTDemo {
         msg("Skipped because transaction was in flight = " + inFlightCount);
         msg("Skipped because vehicle was waiting = " + isActiveCount);
         msg("Unable to find parking = " + users.getUnableToFindParkingCounter());
+        msg("Space stolen when trying to book = " + users.getSpaceStolenParkingCounter());
 
         msg("Charging=" + stateChargingCount);
         msg("Asking=" + stateAskingCount);
@@ -477,7 +480,8 @@ public abstract class BaseIOTDemo {
         long requestId = users.getRequestId(randomuser);
 
 
-        if (overageTimeMinutes > 1) {
+        if (overageTimeMinutes < 2) {
+            
             users.endChargingWithOverage(randomuser, overageTimeMinutes);
             mainClient.callProcedure(ncb, "stop_charge_session", areaId, users.getChargerId(randomuser), areaId,
                     users.getRequestId(randomuser));

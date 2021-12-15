@@ -61,7 +61,7 @@ public class BookParkingCallback implements ProcedureCallback {
             
             if (availableSpacesQuery.getResults().length == 0) {
                 // Space was taken
-                userTransactionState.nothingFound(id);
+                userTransactionState.spaceStolen(id);
             } else {
                // userTransactionState.setState(UserState.STATUS_WAITING, id);
                 VoltTable requestTable = availableSpacesQuery.getResults()[4];requestTable.advanceRow();

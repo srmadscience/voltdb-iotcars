@@ -15,6 +15,7 @@ public class VehicleState {
     Vehicle[] state = null;
     
     int unableToFindParkingCounter = 0;
+    int spaceStolenParkingCounter = 0;
 
     public VehicleState(int count) {
         super();
@@ -93,6 +94,16 @@ public class VehicleState {
             unableToFindParkingCounter++;
         }
 
+    }
+    public void spaceStolen(int id) {
+        synchronized (state) {
+            this.state[id].setState(STATUS_ELSEWHERE);
+            this.state[id].setTxInFlight(false);
+            this.state[id].setEndActivityDate(new Date());
+            this.state[id].setChargeStartTime(null);
+            spaceStolenParkingCounter++;
+        }
+      
     }
 
     public void bookingHappening(int id, long myChargerId, long areaId, Date arrivalTime) {
@@ -175,8 +186,15 @@ public class VehicleState {
         return unableToFindParkingCounter;
     }
 
- 
+    /**
+     * @return the spaceStolenParkingCounter
+     */
+    public int getSpaceStolenParkingCounter() {
+        return spaceStolenParkingCounter;
+    }
 
+ 
+    
     class Vehicle {
         int state = STATUS_ELSEWHERE;
         boolean txInFlight = false;
@@ -316,5 +334,8 @@ public class VehicleState {
 
     }
 
+
+
+  
   
 }
