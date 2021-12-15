@@ -29,7 +29,7 @@ public class ComplexIOTDemo extends BaseIOTDemo {
             Client c = connectVoltDB(hostnames);
             Client c2 = connectVoltDB(hostnames);
 
-            createAreasAndChargers(c, 94000, 95000);
+            createAreasAndChargers(c, 94000, 94000 + areacount - 1);
 
             deleteOldData(c);
 
