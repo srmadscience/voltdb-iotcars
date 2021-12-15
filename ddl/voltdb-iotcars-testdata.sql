@@ -2,11 +2,11 @@ INSERT INTO demo_parameters (param_name, param_value) values ('MINUTES_BEFORE_AR
 INSERT INTO demo_parameters (param_name, param_value) values ('MINUTES_SPENT_CHARGING',2);
 INSERT INTO demo_parameters (param_name, param_value) values ('MAX_OVERAGE_TIME',4);
 
-INSERT INTO areas (area_id, area_name) VALUES (94597, 'Walnut Creek, CA');
+INSERT INTO areas (area_id, area_name) VALUES (94000, 'Walnut Creek, CA');
 
-INSERT INTO area_merchants (area_id, merchant_id, merchant_name, merchant_offers) VALUES (94597, 1, 'Bobs Burgers','Free Lunch special with charging');
+INSERT INTO area_merchants (area_id, merchant_id, merchant_name, merchant_offers) VALUES (94000, 1, 'Bobs Burgers','Free Lunch special with charging');
 
-INSERT INTO area_merchants (area_id, merchant_id, merchant_name,merchant_offers) VALUES (94597, 2, 'Alans Air','Free air in your tires');
+INSERT INTO area_merchants (area_id, merchant_id, merchant_name,merchant_offers) VALUES (94000, 2, 'Alans Air','Free air in your tires');
 
 INSERT INTO area_chargers
 (area_id,charger_id,merchant_id,charger_kwh,hold_rate_per_min,kwh_rate,overage_rate_per_min,current_state,current_state_explanation,charging_requester_id)
