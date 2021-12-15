@@ -54,7 +54,7 @@ public abstract class BaseIOTDemo {
     public static final long DEFAULT_WANTED_KWH = 75;
     private static final long RANDOM_SEED = 42;
 
-    private static final String MINUTES_BEFORE_ARRIVAL = "MINUTES_BEFORE_ARRIVAL";
+    private static final String MAX_MINUTES_BEFORE_ARRIVAL = "MAX_MINUTES_BEFORE_ARRIVAL";
     private static final String MINUTES_SPENT_CHARGING = "MINUTES_SPENT_CHARGING";
     private static final String MAX_OVERAGE_TIME = "MINUTES_AFTER_CHARGING";
 
@@ -314,8 +314,9 @@ public abstract class BaseIOTDemo {
 
                 if (users.getState(randomuser) == VehicleState.STATUS_ELSEWHERE) {
 
-                    Long minutesBeforeArrival = parameters.getOrDefault(MINUTES_BEFORE_ARRIVAL, 1l);
-                    final Date targetTime = new Date(System.currentTimeMillis() + (minutesBeforeArrival * 1000));
+                    int maxMinutesBeforeArrival = parameters.getOrDefault(MAX_MINUTES_BEFORE_ARRIVAL, 1l).intValue();
+                    maxMinutesBeforeArrival = r.nextInt(maxMinutesBeforeArrival) + 1;
+                    final Date targetTime = new Date(System.currentTimeMillis() + (maxMinutesBeforeArrival * 1000));
                     stateWaitingCount++;
 
                     FindParkingCallback fbcp = new FindParkingCallback(users, randomuser, randomArea, r, otherClient);

@@ -1,5 +1,5 @@
-INSERT INTO demo_parameters (param_name, param_value) values ('MINUTES_BEFORE_ARRIVAL',2);
-INSERT INTO demo_parameters (param_name, param_value) values ('MINUTES_SPENT_CHARGING',2);
+INSERT INTO demo_parameters (param_name, param_value) values ('MAX_MINUTES_BEFORE_ARRIVAL',10);
+INSERT INTO demo_parameters (param_name, param_value) values ('MINUTES_SPENT_CHARGING',5);
 INSERT INTO demo_parameters (param_name, param_value) values ('MAX_OVERAGE_TIME',4);
 
 INSERT INTO areas (area_id, area_name) VALUES (94000, 'Walnut Creek, CA');
