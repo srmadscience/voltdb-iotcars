@@ -26,7 +26,7 @@ DROP VIEW request_state_view IF EXISTS;
 DROP VIEW charger_state_view IF EXISTS;
 DROP VIEW request_charge_summary_view IF EXISTS;
 DROP VIEW charger_availability_fullness IF EXISTS;
-DROP VIEW active_user_count IF EXISTS;
+
 
 DROP TABLE areas IF EXISTS;
 DROP TABLE merchant_chargers IF EXISTS;

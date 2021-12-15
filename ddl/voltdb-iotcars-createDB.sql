@@ -79,12 +79,6 @@ CREATE INDEX requests_ix1 ON requests (current_state);
 
 CREATE INDEX requests_ix2 ON requests (vehicle_plate);
 
-CREATE VIEW active_user_count AS
-SELECT current_state, count(*)
-FROM requests
-WHERE current_state IN ('CHARGING','STOPPED','WAITING')
-GROUP BY current_state;
-
 CREATE TABLE request_charges
 (area_id bigint not null 
 ,charger_id bigint not null
@@ -129,6 +123,24 @@ ORDER BY param_name;
 
 CREATE PROCEDURE ShowActivity__promBL AS
 BEGIN
+select 'charger_availability_in_1' statname,  'charger_availability_in_1'  stathelp, how_many statvalue 
+from charger_availability_fullness
+where timeslot = DATEADD(MINUTE,1,TRUNCATE(MINUTE,NOW));
+select 'charger_availability_in_5' statname,  'charger_availability_in_5'  stathelp, how_many statvalue 
+from charger_availability_fullness
+where timeslot = DATEADD(MINUTE,5,TRUNCATE(MINUTE,NOW));
+select 'charger_availability_in_10' statname,  'charger_availability_in_10'  stathelp, how_many statvalue 
+from charger_availability_fullness
+where timeslot = DATEADD(MINUTE,10,TRUNCATE(MINUTE,NOW));
+select 'charger_availability_in_15' statname,  'charger_availability_in_15'  stathelp, how_many statvalue 
+from charger_availability_fullness
+where timeslot = DATEADD(MINUTE,20,TRUNCATE(MINUTE,NOW));
+select 'charger_availability_in_20' statname,  'charger_availability_in_20'  stathelp, how_many statvalue 
+from charger_availability_fullness
+where timeslot = DATEADD(MINUTE,20,TRUNCATE(MINUTE,NOW));
+select 'charger_availability_in_25' statname,  'charger_availability_in_25'  stathelp, how_many statvalue 
+from charger_availability_fullness
+where timeslot = DATEADD(MINUTE,25,TRUNCATE(MINUTE,NOW));
 select 'parameter_name' statname,  'parameter_name'  stathelp, param_name, param_value statvalue from demo_parameters;
 select 'charger_state' statname,  'number of chargers in this state' stathelp  , current_state ,how_many statvalue from charger_state_view;
 select 'request_state' statname,  'status of requests'  stathelp,  current_state,how_many statvalue from request_state_view;
