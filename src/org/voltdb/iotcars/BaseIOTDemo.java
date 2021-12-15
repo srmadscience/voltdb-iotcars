@@ -111,14 +111,14 @@ public abstract class BaseIOTDemo {
 
             try {
                 NullCallback ncb = new NullCallback();
-                
-                mainClient.callProcedure(ncb,"areas.UPSERT", i, "Area " + i);
-                mainClient.callProcedure(ncb,"area_merchants.UPSERT", i, (i * 100), "Bobs burgers # " + (i * 100),
+
+                mainClient.callProcedure(ncb, "areas.UPSERT", i, "Area " + i);
+                mainClient.callProcedure(ncb, "area_merchants.UPSERT", i, (i * 100), "Bobs burgers # " + (i * 100),
                         "Free Lunch special with charging");
-                mainClient.callProcedure(ncb,"area_merchants.UPSERT", i, (i * 100) + 1, "Alans air # " + ((i * 100) + 1),
-                        "Free Air");
-                mainClient.callProcedure(ncb,"merchant_chargers.UPSERT", i, (i * 100), (i * 100));
-                mainClient.callProcedure(ncb,"merchant_chargers.UPSERT", i, (i * 100) + 1, (i * 100) + 1);
+                mainClient.callProcedure(ncb, "area_merchants.UPSERT", i, (i * 100) + 1,
+                        "Alans air # " + ((i * 100) + 1), "Free Air");
+                mainClient.callProcedure(ncb, "merchant_chargers.UPSERT", i, (i * 100), (i * 100));
+                mainClient.callProcedure(ncb, "merchant_chargers.UPSERT", i, (i * 100) + 1, (i * 100) + 1);
 
                 for (int j = 0; j < 100; j++) {
 
@@ -130,11 +130,11 @@ public abstract class BaseIOTDemo {
                         merchantId = (i * 100) + 1;
                     }
 
-                    mainClient.callProcedure(ncb,"area_chargers.UPSERT", i, ((i * 100) + j), merchantId, 15, 3, 0.31, 20,
-                            "FREE", "Not in use", null);
+                    mainClient.callProcedure(ncb, "area_chargers.UPSERT", i, ((i * 100) + j), merchantId, 15, 3, 0.31,
+                            20, "FREE", "Not in use", null);
 
                 }
-                
+
                 mainClient.drain();
 
             } catch (Exception e) {
@@ -159,16 +159,16 @@ public abstract class BaseIOTDemo {
             }
 
             NullCallback ncb = new NullCallback();
-            
+
             for (int i = 0; i < 60; i++) {
 
                 msg("Creating area_charger_availability for now + " + i + " minutes");
-                mainClient.callProcedure(ncb,"@AdHoc",
+                mainClient.callProcedure(ncb, "@AdHoc",
                         "insert into area_charger_availability select area_id,charger_id,DATEADD(MINUTE," + i
                                 + ",truncate(MINUTE,NOW)) from area_chargers;");
 
             }
-            
+
             mainClient.drain();
 
         } catch (IOException | ProcCallException e) {
@@ -273,7 +273,7 @@ public abstract class BaseIOTDemo {
 
         HashMap<String, Long> parameters = getParameters(mainClient);
 
-        VehicleState users = new VehicleState(userCount,r);
+        VehicleState users = new VehicleState(userCount, r);
 
         final long startMsRun = System.currentTimeMillis();
         long currentMs = System.currentTimeMillis();
@@ -318,12 +318,13 @@ public abstract class BaseIOTDemo {
                 users.startTran(randomuser);
 
                 if (users.getState(randomuser) == VehicleState.STATUS_ELSEWHERE) {
-                    
+
                     int randomArea = r.nextInt(areaCount) + START_AREA_ID;
 
                     int maxMinutesBeforeArrival = parameters.getOrDefault(MAX_MINUTES_BEFORE_ARRIVAL, 1l).intValue();
                     maxMinutesBeforeArrival = r.nextInt(maxMinutesBeforeArrival) + 1;
-                    final Date targetTime = new Date(System.currentTimeMillis() + (maxMinutesBeforeArrival * 60 * 1000));
+                    final Date targetTime = new Date(
+                            System.currentTimeMillis() + (maxMinutesBeforeArrival * 60 * 1000));
                     stateWaitingCount++;
 
                     FindParkingCallback fbcp = new FindParkingCallback(users, randomuser, randomArea, r, otherClient);
@@ -355,7 +356,6 @@ public abstract class BaseIOTDemo {
 
                 } else if (users.getState(randomuser) == VehicleState.STATUS_STOPPED) {
 
- 
                     finishCharging(mainClient, r, users, randomuser, 0);
 
                 }
@@ -368,7 +368,7 @@ public abstract class BaseIOTDemo {
 
             // See if we need to do global queries...
             if (lastGlobalQueryMs + (globalQueryFreqSeconds * 1000) < System.currentTimeMillis()) {
-                
+
                 lastGlobalQueryMs = System.currentTimeMillis();
 
                 queryUserAndStats(mainClient, GENERIC_QUERY_LICENCE_PLATE);
@@ -395,19 +395,15 @@ public abstract class BaseIOTDemo {
 
         for (int i = 0; i < userCount; i++) {
 
-            while (endtimeMs > System.currentTimeMillis()) {
+            if (tpThisMs++ > tpMs) {
 
-                if (tpThisMs++ > tpMs) {
+                while (currentMs == System.currentTimeMillis()) {
+                    Thread.sleep(0, 50000);
 
-                    while (currentMs == System.currentTimeMillis()) {
-                        Thread.sleep(0, 50000);
-
-                    }
-
-                    currentMs = System.currentTimeMillis();
-                    tpThisMs = 0;
                 }
 
+                currentMs = System.currentTimeMillis();
+                tpThisMs = 0;
             }
 
             if (users.getState(i) != VehicleState.STATUS_ELSEWHERE) {
@@ -479,18 +475,17 @@ public abstract class BaseIOTDemo {
         long areaId = users.getAreaId(randomuser);
         long requestId = users.getRequestId(randomuser);
 
-
         if (overageTimeMinutes > 2) {
-            
+
             users.endChargingWithOverage(randomuser, overageTimeMinutes);
             mainClient.callProcedure(ncb, "stop_charge_session", areaId, users.getChargerId(randomuser), areaId,
                     users.getRequestId(randomuser));
 
         } else {
-            
+
             users.endCharging(randomuser);
-            mainClient.callProcedure(ncb, "charge_kwh_fees", qty, amount, requestId, areaId, chargerid, qty, amount, areaId,
-                    chargerid);
+            mainClient.callProcedure(ncb, "charge_kwh_fees", qty, amount, requestId, areaId, chargerid, qty, amount,
+                    areaId, chargerid);
             mainClient.callProcedure(ncb, "end_charge_session", areaId, users.getChargerId(randomuser), areaId,
                     users.getRequestId(randomuser));
         }
