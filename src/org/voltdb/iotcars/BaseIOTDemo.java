@@ -110,14 +110,15 @@ public abstract class BaseIOTDemo {
         for (int i = from; i <= to; i++) {
 
             try {
-
-                mainClient.callProcedure("areas.UPSERT", i, "Area " + i);
-                mainClient.callProcedure("area_merchants.UPSERT", i, (i * 100), "Bobs burgers # " + (i * 100),
+                NullCallback ncb = new NullCallback();
+                
+                mainClient.callProcedure(ncb,"areas.UPSERT", i, "Area " + i);
+                mainClient.callProcedure(ncb,"area_merchants.UPSERT", i, (i * 100), "Bobs burgers # " + (i * 100),
                         "Free Lunch special with charging");
-                mainClient.callProcedure("area_merchants.UPSERT", i, (i * 100) + 1, "Alans air # " + ((i * 100) + 1),
+                mainClient.callProcedure(ncb,"area_merchants.UPSERT", i, (i * 100) + 1, "Alans air # " + ((i * 100) + 1),
                         "Free Air");
-                mainClient.callProcedure("merchant_chargers.UPSERT", i, (i * 100), (i * 100));
-                mainClient.callProcedure("merchant_chargers.UPSERT", i, (i * 100) + 1, (i * 100) + 1);
+                mainClient.callProcedure(ncb,"merchant_chargers.UPSERT", i, (i * 100), (i * 100));
+                mainClient.callProcedure(ncb,"merchant_chargers.UPSERT", i, (i * 100) + 1, (i * 100) + 1);
 
                 for (int j = 0; j < 100; j++) {
 
@@ -129,10 +130,12 @@ public abstract class BaseIOTDemo {
                         merchantId = (i * 100) + 1;
                     }
 
-                    mainClient.callProcedure("area_chargers.UPSERT", i, ((i * 100) + j), merchantId, 15, 3, 0.31, 20,
+                    mainClient.callProcedure(ncb,"area_chargers.UPSERT", i, ((i * 100) + j), merchantId, 15, 3, 0.31, 20,
                             "FREE", "Not in use", null);
 
                 }
+                
+                mainClient.drain();
 
             } catch (Exception e) {
                 e.printStackTrace();
