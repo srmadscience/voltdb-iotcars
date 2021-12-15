@@ -79,6 +79,12 @@ CREATE INDEX requests_ix1 ON requests (current_state);
 
 CREATE INDEX requests_ix2 ON requests (vehicle_plate);
 
+CREATE VIEW active_user_count AS
+SELECT current_state, count(*)
+FROM requests
+WHERE current_state IN ()
+GROUP BY current_state;
+
 CREATE TABLE request_charges
 (area_id bigint not null 
 ,charger_id bigint not null
@@ -123,10 +129,10 @@ ORDER BY param_name;
 
 CREATE PROCEDURE ShowActivity__promBL AS
 BEGIN
-select 'parameter_name_'||param_name statname,  'parameter_name_'||param_name  stathelp  ,param_value statvalue from demo_parameters;
-select 'charger_state_'||current_state statname,  'number of chargers that are '||current_state stathelp  ,how_many statvalue from charger_state_view;
-select 'request_state_'||current_state statname,  'number of requests that are '||current_state stathelp  ,how_many statvalue from request_state_view;
-select 'activity_area_'||area_id||'_'||fee_type statname, 'activity in area '||area_id stathelp  ,amount statvalue 
+select 'parameter_name' statname,  'parameter_name'  stathelp, param_name, param_value statvalue from demo_parameters;
+select 'charger_state' statname,  'number of chargers in this state' stathelp  , current_state ,how_many statvalue from charger_state_view;
+select 'request_state' statname,  'status of requests'  stathelp,  current_state,how_many statvalue from request_state_view;
+select 'activity_in_area' statname, 'activity in area ' stathelp ,area_id,fee_type ,amount statvalue 
 from request_charge_summary_view
 where area_id = 94597
 and fee_time = DATEADD(MINUTE,-1,TRUNCATE(MINUTE,NOW));

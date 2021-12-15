@@ -360,6 +360,7 @@ public abstract class BaseIOTDemo {
 
             // See if we need to do global queries...
             if (lastGlobalQueryMs + (globalQueryFreqSeconds * 1000) < System.currentTimeMillis()) {
+                
                 lastGlobalQueryMs = System.currentTimeMillis();
 
                 queryUserAndStats(mainClient, GENERIC_QUERY_LICENCE_PLATE);
