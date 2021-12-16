@@ -259,7 +259,7 @@ PARTITION ON TABLE area_chargers COLUMN area_id PARAMETER 3
 AS
 BEGIN
 insert into request_charges (area_id, charger_id, fee_time, request_id, vehicle_plate,fee_type,kwh,qty,amount) 
-select r.area_id, r.charger_id, NOW, r.request_id, r.vehicle_plate, 'KWH',1,CAST(? AS FLOAT),CAST(? AS FLOAT)
+select r.area_id, r.charger_id, NOW, r.request_id, r.vehicle_plate, 'KWH',1,CAST(? AS FLOAT), ac.kwh_rate * CAST(? AS FLOAT)
 FROM requests r
    , area_chargers ac 
 WHERE r.area_id = ac.area_id 
