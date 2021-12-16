@@ -131,7 +131,7 @@ public abstract class BaseIOTDemo {
                     }
 
                     mainClient.callProcedure(ncb, "area_chargers.UPSERT", i, ((i * 100) + j), merchantId, 15, 3, 0.31,
-                            20, "FREE", "Not in use", null);
+                            3.25, "FREE", "Not in use", null);
 
                 }
 
