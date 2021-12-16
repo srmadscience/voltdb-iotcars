@@ -56,7 +56,7 @@ public abstract class BaseIOTDemo {
 
     private static final String MAX_MINUTES_BEFORE_ARRIVAL = "MAX_MINUTES_BEFORE_ARRIVAL";
     private static final String MINUTES_SPENT_CHARGING = "MINUTES_SPENT_CHARGING";
-    private static final String MAX_OVERAGE_TIME = "MINUTES_AFTER_CHARGING";
+    private static final String MAX_OVERAGE_TIME = "MAX_OVERAGE_TIME";
 
     public static String[] DELETABLE_TABLES = { "area_charger_availability", "requests", "request_charges" };
 
