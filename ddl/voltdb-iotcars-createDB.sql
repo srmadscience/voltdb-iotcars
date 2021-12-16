@@ -246,11 +246,11 @@ BEGIN
 SELECT *
 FROM requests 
 WHERE vehicle_plate = ?
-ORDER BY area_id, charger_id, requested_start_time, request_id;
+ORDER BY requested_start_time, request_id, area_id, charger_id;
 SELECT *
 FROM request_charges
 WHERE vehicle_plate = ?
-ORDER BY area_id, charger_id,fee_time,request_id;
+ORDER BY fee_time, request_id, area_id, charger_id,fee_time;
 END;
 
 
