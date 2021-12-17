@@ -45,13 +45,15 @@ public class FindParkingCallback implements ProcedureCallback {
     int randomArea;
     Random r;
     Client c2;
+    Date targetTime;
     
-    public FindParkingCallback(VehicleState userTransactionState, int id, int randomArea,Random r,Client c2) {
+    public FindParkingCallback(VehicleState userTransactionState, int id, int randomArea,Random r,Client c2, Date targetTime) {
         this.userTransactionState = userTransactionState;
         this.id = id;
         this.randomArea = randomArea;
         this.r = r;
         this.c2 = c2;
+        this.targetTime = targetTime;
     }
 
     /*
@@ -78,11 +80,9 @@ public class FindParkingCallback implements ProcedureCallback {
 
               BookParkingCallback bpc = new BookParkingCallback(userTransactionState, id, randomArea);
 
-              Date arrivalTime = new Date(System.currentTimeMillis() + 30000);
+              userTransactionState.bookingHappening(id, myChargerId, randomArea, targetTime);
 
-              userTransactionState.bookingHappening(id, myChargerId, randomArea, arrivalTime);
-
-              c2.callProcedure(bpc, "SelectOption", randomArea, arrivalTime, myChargerId, r.nextInt(5) + 1, 75,
+              c2.callProcedure(bpc, "SelectOption", randomArea, targetTime, myChargerId, r.nextInt(5) + 1, 75,
                       "CAR" + id);
 
           } else {

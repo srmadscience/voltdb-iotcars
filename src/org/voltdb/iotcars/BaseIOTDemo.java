@@ -327,7 +327,7 @@ public abstract class BaseIOTDemo {
                             System.currentTimeMillis() + (maxMinutesBeforeArrival * 60 * 1000));
                     stateWaitingCount++;
 
-                    FindParkingCallback fbcp = new FindParkingCallback(users, randomuser, randomArea, r, otherClient);
+                    FindParkingCallback fbcp = new FindParkingCallback(users, randomuser, randomArea, r, otherClient,targetTime);
 
                     mainClient.callProcedure(fbcp, "GetOptions", randomArea, targetTime);
 
