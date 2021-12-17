@@ -293,6 +293,12 @@ public abstract class BaseIOTDemo {
         long lastGlobalQueryMs = System.currentTimeMillis();
 
         msg("starting...");
+        
+        long oldSessionsClosed = forceClose( userCount,  tpMs,  users,  mainClient,  r );
+        
+        if (oldSessionsClosed > 0) {
+            msg("Closed " + oldSessionsClosed + " old sessions");
+        }
 
         while (endtimeMs > System.currentTimeMillis()) {
 
@@ -392,28 +398,7 @@ public abstract class BaseIOTDemo {
 
         msg("ending parking sessions");
 
-        long forceClosed = 0;
-
-        for (int i = 0; i < userCount; i++) {
-
-            if (tpThisMs++ > tpMs) {
-
-                while (currentMs == System.currentTimeMillis()) {
-                    Thread.sleep(0, 50000);
-
-                }
-
-                currentMs = System.currentTimeMillis();
-                tpThisMs = 0;
-            }
-
-            if (users.getState(i) != VehicleState.STATUS_ELSEWHERE) {
-
-                finishCharging(mainClient, r, users, i, 0);
-                forceClosed++;
-
-            }
-        }
+        long forceClosed = forceClose( userCount,  tpMs,  users,  mainClient,  r );
 
         msg("finished closing sessions ");
         queryUserAndStats(mainClient, GENERIC_QUERY_LICENCE_PLATE);
@@ -463,6 +448,44 @@ public abstract class BaseIOTDemo {
         }
 
         return parameters;
+    }
+    
+    private static long forceClose(int userCount, int tpMs, VehicleState users, Client mainClient, Random r ) throws NoConnectionsException, IOException {
+        
+        int tpThisMs = 0;
+        long currentMs = System.currentTimeMillis();
+        
+        msg("ending parking sessions");
+
+        long forceClosed = 0;
+
+        for (int i = 0; i < userCount; i++) {
+
+            if (tpThisMs++ > tpMs) {
+
+                while (currentMs == System.currentTimeMillis()) {
+                    try {
+                        Thread.sleep(0, 50000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                currentMs = System.currentTimeMillis();
+                tpThisMs = 0;
+            }
+
+            if (users.getState(i) != VehicleState.STATUS_ELSEWHERE) {
+
+                finishCharging(mainClient, r, users, i, 0);
+                forceClosed++;
+
+            }
+        }
+        
+        return forceClosed;
+        
     }
 
     private static void finishCharging(Client mainClient, Random r, VehicleState users, int randomuser,
