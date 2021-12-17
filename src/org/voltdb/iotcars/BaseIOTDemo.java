@@ -455,7 +455,7 @@ public abstract class BaseIOTDemo {
         int tpThisMs = 0;
         long currentMs = System.currentTimeMillis();
         
-        msg("ending parking sessions");
+        msg("ending existing parking sessions");
 
         long forceClosed = 0;
 
