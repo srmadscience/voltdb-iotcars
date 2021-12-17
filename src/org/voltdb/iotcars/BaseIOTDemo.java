@@ -383,6 +383,7 @@ public abstract class BaseIOTDemo {
                 msg("Charging=" + stateChargingCount);
                 msg("Asking=" + stateAskingCount);
                 msg("Booking=" + stateBookingCount);
+                msg("Waiting=" + stateWaitingCount);
                 msg("Looking=" + stateLookingCount);
 
             }
